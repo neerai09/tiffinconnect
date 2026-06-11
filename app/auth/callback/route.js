@@ -7,7 +7,7 @@ export async function GET(request) {
   const role = searchParams.get('role') || 'customer'
 
   if (code) {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { session } } = await supabase.auth.exchangeCodeForSession(code)
     if (session?.user) {
       const { data: existing } = await supabase.from('profiles').select('id').eq('id', session.user.id).single()
